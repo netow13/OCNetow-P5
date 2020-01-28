@@ -31,7 +31,7 @@ if($PSBoundParameters.ContainsKey("fichier"))
 	        }
             else
 	        {
-                $Password = PswdNT
+                $Password = Pwd$Username%
 	        $Firstname = $User.Prenom
 	        $Lastname = $User.Nom
 	        $Group = $User.Departement
@@ -79,7 +79,7 @@ else
 	        {
                 $NbGroup = Read-Host "Merci d'entrer le nombre de groupe auquel appartient l'utilisateur"
 
-                $Password = Pwd$lastname%
+                $Password = Pwd$Username%
                 $Officephone = Read-Host "Merci d'entrer le numéro de téléphone de bureau de l'utilisateur"
                 $Mobilephone = Read-Host "Merci d'entrer le numéro de téléphone mobile de l'utilisateur"
                 $Email = Read-Host "Merci d'entrer l'adresse email de l'utilisateur"
