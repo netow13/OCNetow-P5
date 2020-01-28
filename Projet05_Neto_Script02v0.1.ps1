@@ -1,4 +1,4 @@
-﻿#Script exportation des membres d'un groupe dans un fichier texte
+#Script exportation des membres d'un groupe dans un fichier texte
 Import-Module activedirectory
 
 #Variable
