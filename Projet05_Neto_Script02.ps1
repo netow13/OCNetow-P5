@@ -1,4 +1,4 @@
-﻿#Script exportation des membres d'un groupe dans un fichier texte
+#Script exportation des membres d'un groupe dans un fichier texte via ligne de commande
 param(
     [string] $groupe
     )
