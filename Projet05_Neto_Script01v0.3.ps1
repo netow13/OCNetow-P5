@@ -1,4 +1,7 @@
-﻿# Importe le module active directory pour utiliser les commandlets AD
+# Script création d'utilisateur dans l'AD à partir d'un fichier CSV si celui-ci existe ou à la suite
+# de questions concernant l'utilisateur à créer
+
+# Importe le module active directory pour utiliser les commandlets AD
 Import-Module activedirectory
 
 $Chemin = Read-Host "Veuillez entrer le nom du fichier CSV pour la création de comptes utilisateurs" 
@@ -13,7 +16,7 @@ if((Test-Path C:\Windows\Temp\$Chemin) -eq $True)
     {
 # Lis les données utilisateur dans chaque champs de chaque rangée et assigne la donnée à une variable ci-dessous	
 	
-	    $Username 	= $User.LoginNT
+	    $Username = $User.LoginNT
     
 # Vérification de l'existance de l'utilisateur dans l'AD
 	    if (Get-ADUser -F {SamAccountName -eq $Username})
@@ -23,17 +26,17 @@ if((Test-Path C:\Windows\Temp\$Chemin) -eq $True)
 	    }
         else
 	    {
-            $Password 	= PswdNT
-	        $Firstname 	= $User.Prenom
-	        $Lastname 	= $User.Nom
-	        $Group = $User.Departement
+            $Password = Pwd$Username%
+	    $Firstname = $User.Prenom
+	    $Lastname = $User.Nom
+	    $Group = $User.Departement
             $OfficePhone = $User.Tel2
             $MobilePhone = $User.Mobile
             $Email = $User.email
 
 # L'utilisateur n'existe pas donc le script cré un nouveau compte utilisateur
 		
-		    New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
+	    New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
         
 # Ajoute l'utilisateur à son groupe
 
