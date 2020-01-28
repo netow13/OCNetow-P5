@@ -1,4 +1,5 @@
-# Script création de nouveaux utilisateurs dans l'AD
+# Script création de nouveaux utilisateurs dans l'AD avec l'ajout dans un groupe et la création d'un dossier partagé
+# pour ce dernier via des question successives
 
 [int] $nombre = Read-Host "Merci de rentrer le nombre d'utilisateurs à créer"
 
