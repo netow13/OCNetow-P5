@@ -21,7 +21,7 @@ if($PSBoundParameters.ContainsKey("fichier"))
         {
 # Lis les données utilisateur dans chaque champs de chaque rangée et assigne la donnée à une variable ci-dessous	
 	
-	        $Username 	= $User.LoginNT
+	        $Username = $User.LoginNT
     
 # Vérification de l'existance de l'utilisateur dans l'AD
 	        if (Get-ADUser -F {SamAccountName -eq $Username})
@@ -31,17 +31,17 @@ if($PSBoundParameters.ContainsKey("fichier"))
 	        }
             else
 	        {
-                $Password 	= PswdNT
-	            $Firstname 	= $User.Prenom
-	            $Lastname 	= $User.Nom
-	            $Group = $User.Departement
+                $Password = PswdNT
+	        $Firstname = $User.Prenom
+	        $Lastname = $User.Nom
+	        $Group = $User.Departement
                 $OfficePhone = $User.Tel2
                 $MobilePhone = $User.Mobile
                 $Email = $User.email
 
 # L'utilisateur n'existe pas donc le script cré un nouveau compte utilisateur
 		
-		        New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
+		New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
         
 # Ajoute l'utilisateur à son groupe
 
@@ -79,7 +79,7 @@ else
 	        {
                 $NbGroup = Read-Host "Merci d'entrer le nombre de groupe auquel appartient l'utilisateur"
 
-                $Password = Pwd$lastname%
+                $Password = Pwd$Username%
                 $Officephone = Read-Host "Merci d'entrer le numéro de téléphone de bureau de l'utilisateur"
                 $Mobilephone = Read-Host "Merci d'entrer le numéro de téléphone mobile de l'utilisateur"
                 $Email = Read-Host "Merci d'entrer l'adresse email de l'utilisateur"
