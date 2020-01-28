@@ -37,7 +37,11 @@ foreach ($User in $ADUsers)
         
 # Ajoute l'utilisateur à son groupe
 
-        	Add-ADGroupMember -Identity $Group -Members $Username             
+        	Add-ADGroupMember -Identity $Group -Members $Username
+		
+#Création dossier partagé au nom de l'utilisateur
+
+    		New-Item -Path \\SRVADPAR01\Sensible\$groupe -Name $nom -ItemType directory		
 
 	}
 }
