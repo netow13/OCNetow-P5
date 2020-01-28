@@ -1,4 +1,4 @@
-﻿# Script exportation liste des groupes dont un utilisateur est membre
+# Script exportation liste des groupes dont un utilisateur est membre dans un fichier texte
 Import-Module activedirectory
 
 # Variable
