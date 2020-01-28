@@ -31,7 +31,7 @@ if($PSBoundParameters.ContainsKey("fichier"))
 	        }
             else
 	        {
-                $Password = PswdNT
+                $Password = Pwd$Username%
 	        $Firstname = $User.Prenom
 	        $Lastname = $User.Nom
 	        $Group = $User.Departement
