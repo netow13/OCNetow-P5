@@ -1,4 +1,4 @@
-﻿# Script création d'utilisateur(s) dans l'AD depuis la ligne de commande ou depuis un fichier CSV
+# Script création d'utilisateur(s) dans l'AD depuis la ligne de commande ou depuis un fichier CSV
 
 param(
     [string] $fichier, $lastname, $firstname
@@ -31,17 +31,17 @@ if($PSBoundParameters.ContainsKey("fichier"))
 	        }
             else
 	        {
-                $Password 	= PswdNT
-	            $Firstname 	= $User.Prenom
-	            $Lastname 	= $User.Nom
-	            $Group = $User.Departement
+                $Password = PswdNT
+	        $Firstname = $User.Prenom
+	        $Lastname = $User.Nom
+	        $Group = $User.Departement
                 $OfficePhone = $User.Tel2
                 $MobilePhone = $User.Mobile
                 $Email = $User.email
 
 # L'utilisateur n'existe pas donc le script cré un nouveau compte utilisateur
 		
-		        New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
+		New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
         
 # Ajoute l'utilisateur à son groupe
 
