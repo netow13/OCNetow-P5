@@ -2,7 +2,7 @@
 
 $NomMachine = "[system.environment]::MachineName"
 $DirToBackup = "C:\Users"
-$Backup = "\\SRVADPAR01\Sensible"
+$Backup = "\\SRVADPAR01\sav"
 
 # Teste de l'existance d'un dossier de sauvegarde selon la machine
 if(Test-Path $Backup\$NomMachine -eq True)
