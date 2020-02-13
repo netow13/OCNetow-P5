@@ -5,6 +5,8 @@ param(
 
 Import-Module activedirectory
 
+$UerName = [Environment]::UserName
+
 # Teste de la présence de l'utilisateur dans AD
 try
 {    
@@ -12,7 +14,7 @@ try
     
 #Exportation des groupes auquels appartient l'utilisateur dans un fichier texte
 
-    $liste = Get-ADPrincipalGroupMembership -Identity $username | get-adgroup -properties name | select name | out-file C:\Users\Administrateur.WIN-LPRU2UTKF0H\Desktop\Membre_concerné_$username.txt
+    $liste = Get-ADPrincipalGroupMembership -Identity $username | get-adgroup -properties name | select name | out-file C:\Users\$UserName\Desktop\Projet05_Neto_AD03.txt
     
 }
 catch
