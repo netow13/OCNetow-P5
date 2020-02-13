@@ -5,6 +5,8 @@ param(
 
 Import-Module activedirectory
 
+$NameUser = [Environment]::UserName
+
 #Teste de la présence du groupe dans AD
 
 try
@@ -13,7 +15,7 @@ try
 
 #Exportation des membres d'un groupe dans un fichier texte si ce dernier existe
     
-    $liste = get-ADGroupMember -Identity $groupe | select Name,SamAccountName | out-file C:\Users\Administrateur.WIN-LPRU2UTKF0H\Desktop\Groupe_concerné_$groupe.txt
+    $liste = get-ADGroupMember -Identity $groupe | select Name,SamAccountName | out-file C:\Users\$NameUser\Desktop\Projet05_Neto_AD02.txt
    
 }
 catch
