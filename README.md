@@ -30,3 +30,5 @@ Documentation des différents scripts proposés.
   Projet05_Neto_Script04.ps1
   
 ### Description
+  C'est un script de sauvegarde de chaque poste client. Il copie l'intégralité du dossier Users d'un poste dans un dossier qui porte le     nom de la machine sauvegardé, qui est lui situé dans un dossier SAV sur le serveur Active Directory. Ici le dossier SAV a donc pour 
+  chemin d'accès \\SRVADPAR01\sav.
