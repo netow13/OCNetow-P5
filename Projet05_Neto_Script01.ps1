@@ -31,7 +31,7 @@ if($PSBoundParameters.ContainsKey("fichier"))
 	        }
             else
 	        {
-                $Password = Pwd$Username%
+                $Password = Pwd2020%
 	        $Firstname = $User.Prenom
 	        $Lastname = $User.Nom
 	        $Group = $User.Departement
@@ -79,10 +79,10 @@ else
 	        {
                 $NbGroup = Read-Host "Merci d'entrer le nombre de groupe auquel appartient l'utilisateur"
 
-                $Password = Pwd$Username%
+                $Password = Pwd2020%
                 $Officephone = Read-Host "Merci d'entrer le numéro de téléphone de bureau de l'utilisateur"
                 $Mobilephone = Read-Host "Merci d'entrer le numéro de téléphone mobile de l'utilisateur"
-                $Email = Read-Host "Merci d'entrer l'adresse email de l'utilisateur"
+                $Email = "$Username@acme.fr"
 
 # Création utilisateur
 
