@@ -1,24 +1,26 @@
 #Script exportation des membres d'un groupe dans un fichier texte via ligne de commande
+
 param(
     [string] $groupe
     )
 
 Import-Module activedirectory
 
-$UserName = [Environment]::UserName
 
 #Teste de la présence du groupe dans AD
 
 try
 {
-    $ADgroupe = Get-ADGroup -Identity $groupe -ErrorAction Stop
+    Get-ADGroup -Identity $groupe -ErrorAction Stop
 
 #Exportation des membres d'un groupe dans un fichier texte si ce dernier existe
     
-    $liste = get-ADGroupMember -Identity $groupe | select Name,SamAccountName | out-file C:\Users\$UserName\Desktop\Projet05_Neto_AD02.txt
+    Get-ADGroupMember -Identity $groupe | select Name,SamAccountName | out-file C:\Temp\Projet05_Neto_AD02.txt
+
+    Write-Host "Exportation effectuée! Retrouvez le fichier texte AD02 dans le dossier C:\Temp."
    
 }
 catch
 {
-    "Groupe non trouvé"
+    "Une erreur est survenue"
 }
