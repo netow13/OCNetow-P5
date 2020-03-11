@@ -11,10 +11,10 @@ Import-Module activedirectory
 if($PSBoundParameters.ContainsKey("fichier"))
 {
 # Vérification de l'existance ou non du fichier
-    if((Test-Path C:\Windows\Temp\$fichier) -eq $True)
+    if((Test-Path C:\Temp\$fichier) -eq $True)
     {
 # Stocke les données du fichier CSV dans la variable $ADUsers
-        $ADUsers = Import-csv C:\Windows\Temp\$fichier -Delimiter ";"
+        $ADUsers = Import-csv C:\Temp\$fichier -Delimiter ";"
 
 # Boucle pour chaque rangée contenant les details d'un utilisateur dans un fichier CSV 
         foreach ($User in $ADUsers)
@@ -31,28 +31,30 @@ if($PSBoundParameters.ContainsKey("fichier"))
 	        }
             else
 	        {
-                $Password = Pwd2020%
-	        $Firstname = $User.Prenom
-	        $Lastname = $User.Nom
-	        $Group = $User.Departement
-                $OfficePhone = $User.Tel2
-                $MobilePhone = $User.Mobile
-                $Email = $User.email
+                	$Password = "Pwd2020%"
+# Le mot de passe sera changé par l'utilisateur lors de la première connection
+	        	$Firstname = $User.Prenom
+	        	$Lastname = $User.Nom
+	            	$Group = $User.Departement
+                	$OfficePhone = $User.Tel2
+                	$MobilePhone = $User.Mobile
+                	$Email = $User.email
 
 # L'utilisateur n'existe pas donc le script cré un nouveau compte utilisateur
 		
-		New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
+		        New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$Firstname $Lastname" -GivenName $Firstname -Surname $Lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$Lastname, $Firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
         
 # Ajoute l'utilisateur à son groupe
 
-                Add-ADGroupMember -Identity $Group -Members $Username
+                	Add-ADGroupMember -Identity $Group -Members $Username
             
 # Création dossier partagé ayant pour nom le login de l'utilisateur
             
-                New-Item -Path \\SRVADPAR01\Sensible\$Group -Name $Username -ItemType directory           
+                	New-Item -Path "\\SRVADPAR01\Dossiers partagés\$Group" -Name $Username -ItemType directory           
 
 	        }
         }
+        Write-Host "Tous les utilisateurs ont été créés."
     }
 
     else
@@ -77,46 +79,47 @@ else
 	        }
             else
 	        {
-                $NbGroup = Read-Host "Merci d'entrer le nombre de groupe auquel appartient l'utilisateur"
-
-                $Password = Pwd2020%
-                $Officephone = Read-Host "Merci d'entrer le numéro de téléphone de bureau de l'utilisateur"
-                $Mobilephone = Read-Host "Merci d'entrer le numéro de téléphone mobile de l'utilisateur"
-                $Email = "$Username@acme.fr"
+                	$NbGroup = Read-Host "Merci d'entrer le nombre de groupe auquel appartient l'utilisateur"
+                	$Password = "Pwd2020%"
+# Le mot de passe sera changé à la première connection
+                	$Officephone = Read-Host "Merci d'entrer le numéro de téléphone de bureau de l'utilisateur"
+                	$Mobilephone = Read-Host "Merci d'entrer le numéro de téléphone mobile de l'utilisateur"
+                	$Email = "$Username@acme.fr"
 
 # Création utilisateur
 
-                New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$firstname $lastname" -GivenName $firstname -Surname $lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$lastname, $firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
-                if($NbGroup -ge 1)
-                {
-                    $i = 1
+                	New-ADUser -SamAccountName $Username -UserPrincipalName "$Username@acme.sp" -Name "$firstname $lastname" -GivenName $firstname -Surname $lastname -OfficePhone $OfficePhone -MobilePhone $MobilePhone -EmailAddress $Email -Enabled $True -DisplayName "$lastname, $firstname" -AccountPassword (ConvertTo-SecureString $Password -AsPlainText -Force) -ChangePasswordAtLogon $True
+                	if($NbGroup -ge 1)
+                	{
+                    		$i = 1
 # Boucle d'ajout d'un utilisateur à 1 ou plusieurs groupes
-                    While($i -le $NbGroup)
-                    {
-                        $Group = Read-Host "Merci d'entrer le nom du groupe n°$i auquel l'utilisateur est rattaché (SEC, DIR, COM, MAR, ING ou RH)"
+                    		While($i -le $NbGroup)
+                    		{
+                        		$Group = Read-Host "Merci d'entrer le nom du groupe n°$i auquel l'utilisateur est rattaché (DIR, FIN, MKT, ING ou RH (ajouté Stagiaire_ avant le groupe s'il s'agit d'un stagiaire))"
 
 # Ajout utilisateur à un groupe                    
-                        Add-ADGroupMember -Identity $Group -Members $Username
+                        		Add-ADGroupMember -Identity $Group -Members $Username
 
 # Création dossier partagé ayant pour nom le login de l'utilisateur
-                        New-Item -Path \\SRVADPAR01\Sensible\$Group -Name $Username -ItemType directory
+                        		New-Item -Path "\\SRVADPAR01\Dossiers partagés\$Group" -Name $Username -ItemType directory
 
-                        $i++
-                    }
-                }
-                else
-                {
-                    Write-Warning "L'utilisateur n'a été ajouté à aucun groupe"
-                }
-            }
+                        		$i++
+                    		}
+                	}
+                	else
+                	{
+                    		Write-Warning "L'utilisateur n'a été ajouté à aucun groupe"
+                	}
+                	Write-Host "L'utilisateur a été créé."
+            	}
         }
         else
         {
-            Write-Warning "Aucun prénom n'a été utilisé en argument"
+            	Write-Warning "Aucun prénom n'a été utilisé en argument"
         }
     }
     else
     {
-        Write-Warning "Aucun nom n'a été utilisé en argument"
+        	Write-Warning "Aucun nom n'a été utilisé en argument"
     }
 }
